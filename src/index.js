@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
-import ManifestAction from './Action';
-import ManifestButton from './Button';
+import ManifestAction from './action';
+import ManifestButton from './button';
 
 import deep from 'deep-diff';
 import style from './style';
