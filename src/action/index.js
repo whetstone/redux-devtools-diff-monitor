@@ -1,28 +1,30 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-import './index.scss';
+import style from './style';
 
 export default class ManifestActionComponent extends React.Component {
   constructor() {
     super();
     this.state = {
       expanded: false
-    }
+    };
   }
 
   render() {
-    const {action, diff} = this.props;
-    const actionClasses = classNames(
-      'action',
-      {
-        'action--mutated': diff.length > 0,
-        'action--disabled': this.props.skipped
-      }
-    );
+    const { action, diff: { length }, skipped } = this.props;
+
+    if (length > 0) {
+      style.title.background = 'lightgreen';
+    }
+
+    if (skipped) {
+      style.title.background = 'black';
+      style.title.color = 'white';
+    }
 
     const actionBlock = this.state.expanded ?
       <div>
-        <pre className="raw">{JSON.stringify(action)}</pre>
+        <pre>{JSON.stringify(action)}</pre>
       </div> :
       null;
 
@@ -33,8 +35,8 @@ export default class ManifestActionComponent extends React.Component {
 
     const storeBlock = this.state.expanded && diff.length > 0 ?
       <div>
-        <div className="action__header"><span>Store Mutations</span></div>
-        <pre className="store">{changes}</pre>
+        <div style={style.header}><span>Store Mutations</span></div>
+        <pre style={style.store}>{changes}</pre>
       </div> :
       null;
 
@@ -45,10 +47,10 @@ export default class ManifestActionComponent extends React.Component {
 
     return (
       <div>
-        <div className={actionClasses}>
-          <div className="action__title">
+        <div style={style.base}>
+          <div style={style.title}>
             <span onClick={this.expandAction.bind(this)}>{action.type}</span>
-            <span className="action__toggle" onClick={this.disableAction.bind(this)}>
+            <span style={style.toggle} onClick={this.disableAction.bind(this)}>
               {enableToggle}
             </span>
           </div>
@@ -56,7 +58,7 @@ export default class ManifestActionComponent extends React.Component {
           {storeBlock}
         </div>
       </div>
-    )
+    );
   }
 
   renderDiff(diff, index) {
@@ -65,16 +67,16 @@ export default class ManifestActionComponent extends React.Component {
 
     return (
       <span key={index}>
-        {diff.path.join('.')}: <span className="old">{oldValue}</span> {newValue}
+        {diff.path.join('.')}: <span style={style.storeOld}>{oldValue}</span> {newValue}
         <br/>
       </span>
-    )
+    );
   }
 
   expandAction() {
     this.setState({
       expanded: !this.state.expanded
-    })
+    });
   }
 
   disableAction() {

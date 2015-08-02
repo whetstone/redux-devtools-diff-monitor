@@ -4,7 +4,7 @@ import ManifestAction from './Action';
 import ManifestButton from './Button';
 
 import deep from 'deep-diff';
-import './index.scss';
+import style from './style';
 import classNames from 'classnames'
 import mousetrap from 'mousetrap';
 
@@ -41,7 +41,7 @@ export default class ManifestComponent extends React.Component {
   }
 
   toggleVisibility() {
-    this.setState({visible: !this.state.visible})
+    this.setState({visible: !this.state.visible});
   }
 
   componentWillUnmount() {
@@ -50,16 +50,15 @@ export default class ManifestComponent extends React.Component {
 
   render() {
     const actionReports = this.props.stagedActions.map(this.renderAction.bind(this));
-    const frameClasses = classNames(
-      'frame',
-      {
-        'frame--hidden': this.state.visible === false
-      }
-    );
+    const { visible } = this.state;
+
+    if (visible) {
+      style.base.display = 'none';
+    }
 
     return (
-      <div className={frameClasses}>
-        <div className="frame__header">
+      <div style={style.base}>
+        <div>
           <ManifestButton label="Commit" action={this.props.commit.bind(this)} />
           <ManifestButton label="Rollback" action={this.props.rollback.bind(this)} />
           <ManifestButton label="Reset" action={this.props.reset.bind(this)} />
@@ -88,7 +87,7 @@ export default class ManifestComponent extends React.Component {
                       skipped={skippingAction}
                       toggleAction={this.props.toggleAction.bind(this, index)}
                       jumpTo={this.jumpingTo.bind(this, index)}/>
-    )
+    );
   }
 
   jumpingTo(index) {
