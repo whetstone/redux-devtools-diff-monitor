@@ -1,0 +1,18 @@
+.frame {
+  font-family: 'Arial', san-serif;
+  font-size: 13px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 350px;
+  background: #eee;
+  word-wrap: break-word;
+  padding: 0 10px 0 10px;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+
+  &--hidden {
+    display: none;
+  }
+}

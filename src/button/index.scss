@@ -1,0 +1,18 @@
+.manifestButton {
+  cursor: pointer;
+  background: white;
+  border: 1px solid black;
+  border-radius: 50px;
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 10px 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+
+  &:not(:first-of-type) {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    background: darken(#eee,15%);
+  }
+}
