@@ -11,9 +11,9 @@ export default class ManifestActionComponent extends React.Component {
   }
 
   render() {
-    const { action, diff: { length }, skipped } = this.props;
+    const { action, diff, skipped } = this.props;
 
-    if (length > 0) {
+    if (diff.length > 0) {
       style.title.background = 'lightgreen';
     }
 
