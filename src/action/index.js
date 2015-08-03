@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-import classNames from 'classnames';
+import Radium from 'radium';
 import style from './style';
 
-export default class ManifestActionComponent extends React.Component {
+class ManifestActionComponent extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -10,47 +10,72 @@ export default class ManifestActionComponent extends React.Component {
     };
   }
 
+  getDiffs = () => {
+    const { diff } = this.props;
+    return diff.map(diff => this.renderDiff(diff));
+  }
+
+  expandAction = () => {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  }
+
+  disableAction = () => {
+    this.props.toggleAction(this.props.index);
+  }
+
+  renderDiff = (diff, index) => {
+    const oldValue = JSON.stringify(diff.lhs);
+    const newValue = JSON.stringify(diff.rhs);
+
+    return (
+      <div key={index}>
+        { diff.path.join('.') }: <span style={style.oldValue}>{ oldValue || 'undefined' }</span>
+        <span style={style.newValue}> { newValue } </span>
+      </div>
+    );
+  }
+
   render() {
     const { action, diff, skipped } = this.props;
-
-    if (diff.length > 0) {
-      style.title.background = 'lightgreen';
-    }
-
-    if (skipped) {
-      style.title.background = 'black';
-      style.title.color = 'white';
-    }
+    const { expanded } = this.state;
+    const storeHasChanged = !!diff.length;
+    const changes = this.getDiffs();
 
     const actionBlock = this.state.expanded ?
       <div>
-        <pre>{JSON.stringify(action)}</pre>
+        <pre style={style.actionData}>{JSON.stringify(action)}</pre>
       </div> :
       null;
 
-    let changes = [];
-    if (diff.length > 0) {
-      changes = diff.map(this.renderDiff.bind(this));
-    }
-
-    const storeBlock = this.state.expanded && diff.length > 0 ?
+    const storeBlock = (expanded && storeHasChanged) ?
       <div>
-        <div style={style.header}><span>Store Mutations</span></div>
-        <pre style={style.store}>{changes}</pre>
+        <div style={style.header}>
+          <span>Store Mutations</span>
+        </div>
+        <pre style={style.store}>
+          {changes}
+        </pre>
       </div> :
       null;
 
-
-    const enableToggle = this.props.skipped ?
+    const enableToggle = skipped ?
       'enable' :
       'disable';
 
     return (
       <div>
         <div style={style.base}>
-          <div style={style.title}>
-            <span onClick={this.expandAction.bind(this)}>{action.type}</span>
-            <span style={style.toggle} onClick={this.disableAction.bind(this)}>
+          <div
+            style={[
+              style.title,
+              diff.length && style.mutated,
+              skipped && style.skipped,
+            ]}
+          >
+            <span onClick={this.expandAction}>{action.type}</span>
+            <span style={style.toggle} onClick={this.disableAction}>
               {enableToggle}
             </span>
           </div>
@@ -60,26 +85,6 @@ export default class ManifestActionComponent extends React.Component {
       </div>
     );
   }
-
-  renderDiff(diff, index) {
-    const oldValue = JSON.stringify(diff.lhs);
-    const newValue = JSON.stringify(diff.rhs);
-
-    return (
-      <span key={index}>
-        {diff.path.join('.')}: <span style={style.storeOld}>{oldValue}</span> {newValue}
-        <br/>
-      </span>
-    );
-  }
-
-  expandAction() {
-    this.setState({
-      expanded: !this.state.expanded
-    });
-  }
-
-  disableAction() {
-    this.props.toggleAction(this.props.index);
-  }
 }
+
+export default Radium(ManifestActionComponent);

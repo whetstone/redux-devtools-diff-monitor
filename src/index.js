@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
+import Radium from 'radium';
 
 import ManifestAction from './action';
 import ManifestButton from './button';
 
 import deep from 'deep-diff';
-import style from './style';
-import classNames from 'classnames'
 import mousetrap from 'mousetrap';
 
-export default class ManifestComponent extends React.Component {
+import style from './style';
+
+class ManifestComponent extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -51,19 +52,20 @@ export default class ManifestComponent extends React.Component {
   render() {
     const actionReports = this.props.stagedActions.map(this.renderAction.bind(this));
     const { visible } = this.state;
-
-    if (visible) {
-      style.base.display = 'none';
-    }
+    const { commit, rollback, reset } = this.props;
 
     return (
-      <div style={style.base}>
-        <div>
-          <ManifestButton label="Commit" action={this.props.commit.bind(this)} />
-          <ManifestButton label="Rollback" action={this.props.rollback.bind(this)} />
-          <ManifestButton label="Reset" action={this.props.reset.bind(this)} />
-
+      <div style={[
+          style.base,
+          visible && style.hidden,
+        ]}
+      >
+        <div style={style.controls}>
+          <ManifestButton label="Commit" action={commit} />
+          <ManifestButton label="Rollback" action={rollback} />
+          <ManifestButton label="Reset" action={reset} />
         </div>
+
         {actionReports.reverse()}
       </div>
     );
@@ -94,3 +96,5 @@ export default class ManifestComponent extends React.Component {
     this.props.jumpToState(index);
   }
 }
+
+export default Radium(ManifestComponent);

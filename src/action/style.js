@@ -15,7 +15,15 @@ export default {
     padding: '3px',
     background: '#ddd',
     userSelect: 'none',
-    webkitUserSelect: 'none',
+    WebkitUserSelect: 'none',
+  },
+
+  mutated: {
+    background: 'lightgreen',
+  },
+
+  skipped: {
+    background: 'black',
     color: 'white',
   },
 
@@ -28,13 +36,25 @@ export default {
     fontSize: '0.9em',
   },
 
+  actionData: {
+    padding: '0 10px',
+  },
+
   store: {
     margin: '0',
     padding: '5px',
   },
 
-  storeOld: {
+  changedProperty: {
+    display: 'block',
+  },
+
+  oldValue: {
     textDecoration: 'line-through',
-    color: '#ddd',
+    color: 'pink',
+  },
+
+  newValue: {
+    color: 'darkgreen',
   },
 };

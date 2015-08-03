@@ -20,6 +20,10 @@
     "redux": "^1.0.0 || 1.0.0-rc"
   },
   "dependencies": {
+    "deep-diff": "^0.3.2",
+    "mousetrap": "^1.5.3",
+    "radium": "^0.13.5",
+    "react": "^0.13.3",
     "react-redux": "^0.2.2",
     "redux": "^1.0.0-rc"
   }

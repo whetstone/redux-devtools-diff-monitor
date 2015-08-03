@@ -13,4 +13,12 @@ export default {
     borderLeft: '1px solid #ddd',
     overflow: 'auto',
   },
+
+  controls: {
+    marginBottom: '10px',
+  },
+
+  hidden: {
+    display: 'none',
+  },
 }
