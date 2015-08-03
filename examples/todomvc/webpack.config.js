@@ -19,7 +19,8 @@ module.exports = {
   ],
   resolve: {
     alias: {
-      'react': path.join(__dirname, 'node_modules', 'react')
+      'react': path.join(__dirname, 'node_modules', 'react'),
+      'redux-devtools-diff-monitor':  path.join(__dirname, '..', '..', 'src')
     },
     extensions: ['', '.js']
   },
