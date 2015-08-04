@@ -2,6 +2,8 @@
 
 This project provides an alternate monitor for Redux DevTools. The primary goal of this monitor is to highlight the changes to an application's state from action to action. This tool includes the main features from the default DevTools monitor (rollback, commit, reset and individual action toggles).
 
+![Imgur](http://i.imgur.com/rvCR9OQ.png)
+
 ### Installation Example
 
 ```javascript
