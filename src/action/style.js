@@ -12,7 +12,7 @@ export default {
 
   title: {
     cursor: 'pointer',
-    padding: '3px',
+    padding: '12px',
     background: '#ddd',
     userSelect: 'none',
     WebkitUserSelect: 'none',
@@ -37,12 +37,12 @@ export default {
   },
 
   actionData: {
-    padding: '0 10px',
+    padding: '0 10px 10px 8px',
   },
 
   store: {
     margin: '0',
-    padding: '5px',
+    padding: '10px',
   },
 
   changedProperty: {
