@@ -4,7 +4,8 @@
   "description": "TodoMVC example for redux",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dist": "webpack --config webpack.config.dist.js"
   },
   "repository": {
     "type": "git",
