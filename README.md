@@ -13,7 +13,7 @@ This project provides an alternate monitor for Redux DevTools. The primary goal 
 
 ### Example
 
-The TodoMVC example from the Redux Devtools project is included in `./examples/todomvc`. To build and view the example:
+The TodoMVC example from the Redux Devtools project is included in `./examples/todomvc`. [Click here](http://production.diff-monitor-example.divshot.io/) to view the example. To build and view the example locally:
 
 1. Run `npm install` from the project root
 2. cd to `./examples/todomvc`
