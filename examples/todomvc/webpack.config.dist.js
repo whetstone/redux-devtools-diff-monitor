@@ -20,7 +20,7 @@ module.exports = {
   },
   plugins: [
      new HtmlWebpackPlugin({
-         title: 'Redux Auth Demo',
+         title: 'Redux TodoMVC',
          template: 'index.template.ejs',
          inject: 'body',
      }),
