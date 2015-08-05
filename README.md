@@ -2,7 +2,17 @@
 
 This project provides an alternate monitor for Redux DevTools. The primary goal of this monitor is to highlight the changes to an application's state from action to action. This tool includes the main features from the default DevTools monitor (rollback, commit, reset and individual action toggles).
 
+![Imgur](http://i.imgur.com/rvCR9OQ.png)
+
+As with the Redux DevTools, this project is a developer tool and is not intended for use in production.
+
 ### Installation Example
+
+Install from npm:
+
+`npm install --save-dev redux-devtools-diff-monitor`
+
+Render Devtools and pass this monitor as a prop, e.g. `<DevTools store={store} monitor={DiffMonitor} />`.
 
 ```javascript
 import React, { Component } from 'react';
@@ -48,9 +58,9 @@ export default class App extends Component {
 - Click "disable" next to any action name to ignore that action and roll back the state mutations that action caused.
 - As in the default Redux DevTools, click 'Commit' to reset the monitor and set the current app state as the rollback point. If you click rollback after clicking commit, actions will be replayed through the commit point.
 
-### Example
+### [Example](http://production.diff-monitor-example.divshot.io/)
 
-The TodoMVC example from the Redux Devtools project is included in `./examples/todomvc`. [Click here](http://production.diff-monitor-example.divshot.io/) to view the example. To build and view the example locally:
+The TodoMVC example from the Redux Devtools project is included in `./examples/todomvc`. To build and view locally:
 
 1. Run `npm install` from the project root
 2. cd to `./examples/todomvc`
