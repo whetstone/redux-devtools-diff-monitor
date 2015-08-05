@@ -1,6 +1,7 @@
 export default {
   base: {
     cursor: 'pointer',
+    color: 'black',
     background: 'white',
     border: '2px solid white',
     borderRadius: '5px',

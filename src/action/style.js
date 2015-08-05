@@ -34,6 +34,7 @@ export default {
     textAlign: 'center',
     width: '100%',
     fontSize: '0.9em',
+    color: 'black'
   },
 
   actionData: {
