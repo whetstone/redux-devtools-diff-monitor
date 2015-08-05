@@ -35,7 +35,7 @@ class ManifestComponent extends React.Component {
 
   componentDidMount() {
     const self = this;
-    Mousetrap.bind(['ctrl+]'], function (e) {
+    Mousetrap.bind(['ctrl+h', 'ctrl+]'], function (e) {
       self.toggleVisibility();
       return false;
     });
@@ -46,7 +46,7 @@ class ManifestComponent extends React.Component {
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind(['ctrl+]']);
+    Mousetrap.unbind(['ctrl+h', 'ctrl+]']);
   }
 
   render() {

@@ -41,7 +41,7 @@ class ManifestActionComponent extends React.Component {
     const { action, diff, skipped } = this.props;
     const { expanded } = this.state;
     const storeHasChanged = !!diff.length;
-    const changes = this.getDiffs();
+    const changes         = this.getDiffs();
 
     const actionBlock = this.state.expanded ?
       <div>
@@ -73,7 +73,7 @@ class ManifestActionComponent extends React.Component {
               diff.length && style.mutated,
               skipped && style.skipped,
             ]}
-          >
+            >
             <span onClick={this.expandAction}>{action.type}</span>
             <span style={style.toggle} onClick={this.disableAction}>
               {enableToggle}
