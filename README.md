@@ -41,7 +41,7 @@ export default class App extends Component {
 
 ### Usage
 
-- When included as a DevTools monitor, use `Ctrl+]` to toggle visibility of the frame.
+- When included as a DevTools monitor, use `Ctrl+]` or `Ctrl+H` to toggle visibility of the frame.
 - New actions appear at the top of the monitor as they occur.
 - Actions will be minimized by default; actions shown in green are causing a state mutation.
 - Click an action name to expand its pane to view the state mutations the action caused.
