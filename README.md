@@ -4,7 +4,15 @@ This project provides an alternate monitor for Redux DevTools. The primary goal 
 
 ![Imgur](http://i.imgur.com/rvCR9OQ.png)
 
+As with the Redux DevTools, this project is a developer tool and is not intended for use in production.
+
 ### Installation Example
+
+Install from npm:
+
+`npm install --save-dev redux-devtools-diff-monitor`
+
+Render Devtools and pass this monitor as a prop, e.g. `<DevTools store={store} monitor={DiffMonitor} />`.
 
 ```javascript
 import React, { Component } from 'react';
