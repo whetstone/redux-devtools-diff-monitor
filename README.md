@@ -50,9 +50,9 @@ export default class App extends Component {
 - Click "disable" next to any action name to ignore that action and roll back the state mutations that action caused.
 - As in the default Redux DevTools, click 'Commit' to reset the monitor and set the current app state as the rollback point. If you click rollback after clicking commit, actions will be replayed through the commit point.
 
-### Example
+### [Example](http://production.diff-monitor-example.divshot.io/)
 
-The TodoMVC example from the Redux Devtools project is included in `./examples/todomvc`. [Click here](http://production.diff-monitor-example.divshot.io/) to view the example. To build and view the example locally:
+The TodoMVC example from the Redux Devtools project is included in `./examples/todomvc`. To build and view locally:
 
 1. Run `npm install` from the project root
 2. cd to `./examples/todomvc`
