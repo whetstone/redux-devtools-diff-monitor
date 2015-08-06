@@ -3,6 +3,7 @@ export default {
     fontFamily: 'Arial, sans-serif',
     fontSize: '13px',
     position: 'fixed',
+    color: 'black',
     top: 0,
     right: 0,
     bottom: 0,
