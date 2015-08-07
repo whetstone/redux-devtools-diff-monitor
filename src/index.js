@@ -23,6 +23,7 @@ class ManifestComponent extends React.Component {
     currentStateIndex: PropTypes.number.isRequired,
     stagedActions: PropTypes.array.isRequired,
     skippedActions: PropTypes.object.isRequired,
+    style: PropTypes.object,
 
     // Stuff you can do
     reset: PropTypes.func.isRequired,
@@ -52,12 +53,13 @@ class ManifestComponent extends React.Component {
   render() {
     const actionReports = this.props.stagedActions.map(this.renderAction.bind(this));
     const { visible } = this.state;
-    const { commit, rollback, reset } = this.props;
+    const { commit, rollback, reset, style: styleProps } = this.props;
 
     return (
       <div style={[
           style.base,
           visible && style.hidden,
+          !!styleProps && styleProps
         ]}
       >
         <div style={style.controls}>
