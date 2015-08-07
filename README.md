@@ -51,12 +51,21 @@ export default class App extends Component {
 
 ### Usage
 
-- When included as a DevTools monitor, use `Ctrl+]` or `Ctrl+H` to toggle visibility of the frame.
+- When included as a DevTools monitor, use the keyboard shortcut (`Ctrl+]` or `Ctrl+H` by default) to toggle visibility of the frame.
 - New actions appear at the top of the monitor as they occur.
 - Actions will be minimized by default; actions shown in green are causing a state mutation.
 - Click an action name to expand its pane to view the state mutations the action caused.
 - Click "disable" next to any action name to ignore that action and roll back the state mutations that action caused.
 - As in the default Redux DevTools, click 'Commit' to reset the monitor and set the current app state as the rollback point. If you click rollback after clicking commit, actions will be replayed through the commit point.
+
+### Props
+
+#### `shortcutKeys`
+
+Specifies the keyboard shortcuts that will toggle the monitor's visibility.
+
+- string `ctrl+h`
+- array of strings `['ctrl+h', 'ctrl+]']`
 
 ### [Example](http://production.diff-monitor-example.divshot.io/)
 
