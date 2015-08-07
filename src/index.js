@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Radium from 'radium';
 
 import ManifestAction from './action';
@@ -9,7 +9,7 @@ import mousetrap from 'mousetrap';
 
 import style from './style';
 
-class ManifestComponent extends React.Component {
+class ManifestComponent extends Component {
   constructor() {
     super();
     this.state = {
@@ -23,6 +23,10 @@ class ManifestComponent extends React.Component {
     currentStateIndex: PropTypes.number.isRequired,
     stagedActions: PropTypes.array.isRequired,
     skippedActions: PropTypes.object.isRequired,
+    shortcutKeys: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(React.PropTypes.number),
+    ]),
 
     // Stuff you can do
     reset: PropTypes.func.isRequired,
@@ -33,15 +37,21 @@ class ManifestComponent extends React.Component {
     jumpToState: PropTypes.func.isRequired // ({ index })
   };
 
+  static defaultProps = {
+      shortcutKeys: ['ctrl+h', 'ctrl+]'],
+  }
+
   componentDidMount() {
-    const self = this;
-    Mousetrap.bind(['ctrl+h', 'ctrl+]'], function (e) {
-      self.toggleVisibility();
+    const { toggleVisibility } = this;
+    const { shortcutKeys } = this.props;
+
+    Mousetrap.bind(shortcutKeys, function (e) {
+      toggleVisibility();
       return false;
     });
   }
 
-  toggleVisibility() {
+  toggleVisibility = () => {
     this.setState({visible: !this.state.visible});
   }
 
