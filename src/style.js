@@ -2,13 +2,7 @@ export default {
   base: {
     fontFamily: 'Arial, sans-serif',
     fontSize: '13px',
-    position: 'fixed',
     color: 'black',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    width: '350px',
-    zIndex: 100000,
     background: '#eee',
     wordWrap: 'break-word',
     padding: '0 10px 0 10px',

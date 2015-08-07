@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TodoApp from './TodoApp';
 import { createStore, combineReducers, compose } from 'redux';
 import { devTools, persistState } from 'redux-devtools';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+import { DevTools, DebugPanel } from 'redux-devtools/lib/react';
 
 import DiffMonitor from 'redux-devtools-diff-monitor';
 
@@ -25,7 +25,9 @@ export default class App extends Component {
         <Provider store={store}>
           {() => <TodoApp /> }
         </Provider>
-        <DevTools store={store} monitor={DiffMonitor} />
+        <DebugPanel top left bottom>
+            <DevTools store={store} monitor={DiffMonitor} />
+        </DebugPanel>
     </div>
     );
   }
