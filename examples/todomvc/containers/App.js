@@ -11,9 +11,8 @@ import * as reducers from '../reducers';
 
 const finalCreateStore = compose(
   devTools(),
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
-  createStore
-);
+  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+)(createStore);
 
 const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
