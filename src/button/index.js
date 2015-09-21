@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import style from './style';
 
-export default class ManifestButton {
+export default class ManifestButton extends React.Component {
   render() {
     const { label, action } = this.props;
 
