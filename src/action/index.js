@@ -73,8 +73,9 @@ class ManifestActionComponent extends React.Component {
               diff.length && style.mutated,
               skipped && style.skipped,
             ]}
+            onClick={this.expandAction}
             >
-            <span onClick={this.expandAction}>{action.type}</span>
+            <span>{action.type}</span>
             <span style={style.toggle} onClick={this.disableAction}>
               {enableToggle}
             </span>

@@ -4,7 +4,7 @@ import { createStore, combineReducers, compose } from 'redux';
 import { devTools, persistState } from 'redux-devtools';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
-import DiffMonitor from 'redux-devtools-diff-monitor';
+import DiffMonitor from '../../../lib';
 
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
