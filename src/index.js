@@ -35,7 +35,7 @@ class ManifestComponent extends React.Component {
 
   componentDidMount() {
     const self = this;
-    Mousetrap.bind(['ctrl+h', 'ctrl+]'], function (e) {
+    Mousetrap.bind(this.props.shortcut || ['ctrl+h', 'ctrl+]'], function (e) {
       self.toggleVisibility();
       return false;
     });
