@@ -24,7 +24,7 @@ export default class App extends Component {
         <Provider store={store}>
           {() => <TodoApp /> }
         </Provider>
-        <DevTools store={store} monitor={DiffMonitor} />
+        <DevTools store={store} monitor={DiffMonitor} shortcut='ctrl+d' />
     </div>
     );
   }
