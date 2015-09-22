@@ -46,7 +46,7 @@ class ManifestComponent extends React.Component {
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind(['ctrl+h', 'ctrl+]']);
+    Mousetrap.unbind(this.props.shortcut || ['ctrl+h', 'ctrl+]']);
   }
 
   render() {
