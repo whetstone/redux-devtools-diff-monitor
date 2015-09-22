@@ -15,7 +15,7 @@ const finalCreateStore = compose(
 )(createStore);
 
 const reducer = combineReducers(reducers);
-const store = finalCreateStore(reducer);
+const store   = finalCreateStore(reducer);
 
 export default class App extends Component {
   render() {
@@ -24,8 +24,8 @@ export default class App extends Component {
         <Provider store={store}>
           {() => <TodoApp /> }
         </Provider>
-        <DevTools store={store} monitor={DiffMonitor} shortcut='ctrl+d' />
-    </div>
+        <DevTools store={store} monitor={DiffMonitor} shortcut='ctrl+d'/>
+      </div>
     );
   }
 }

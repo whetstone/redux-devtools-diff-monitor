@@ -12,7 +12,7 @@ class ManifestActionComponent extends React.Component {
 
   getDiffs = () => {
     const { diff } = this.props;
-    return diff.map(diff => this.renderDiff(diff));
+    return diff.map((d,i) => this.renderDiff(d,i));
   }
 
   expandAction = () => {
