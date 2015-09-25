@@ -5,6 +5,7 @@ import ManifestAction from './action';
 import ManifestButton from './button';
 
 import deep from 'deep-diff';
+import Immutable from 'immutable';
 import mousetrap from 'mousetrap';
 
 import style from './style';
@@ -74,8 +75,8 @@ class ManifestComponent extends React.Component {
   renderAction(action, index) {
     let newState, oldState, diff;
     if (index !== 0) {
-      newState = this.props.computedStates[index].state;
-      oldState = this.props.computedStates[index - 1].state;
+      newState = Immutable.Map(this.props.computedStates[index].state).toJS();
+      oldState = Immutable.Map(this.props.computedStates[index - 1].state).toJS();
       diff = deep.diff(oldState, newState);
     }
 
