@@ -75,8 +75,8 @@ class ManifestComponent extends React.Component {
   renderAction(action, index) {
     let newState, oldState, diff;
     if (index !== 0) {
-      newState = Immutable.Map(this.props.computedStates[index].state).toJS();
-      oldState = Immutable.Map(this.props.computedStates[index - 1].state).toJS();
+      newState = Immutable.Map(this.props.computedStates[index].state).toObject();
+      oldState = Immutable.Map(this.props.computedStates[index - 1].state).toObject();
       diff = deep.diff(oldState, newState);
     }
 
