@@ -10,80 +10,114 @@ class ManifestActionComponent extends React.Component {
     };
   }
 
-  getDiffs = () => {
+  getDiffs () {
     const { diff } = this.props;
+
     return diff.map((d,i) => this.renderDiff(d,i));
   }
 
-  expandAction = () => {
+  expandAction () {
     this.setState({
       expanded: !this.state.expanded
     });
   }
 
-  disableAction = () => {
+  disableAction () {
     this.props.toggleAction(this.props.index);
   }
 
-  renderDiff = (diff, index) => {
-    const oldValue = JSON.stringify(diff.lhs);
-    const newValue = JSON.stringify(diff.rhs);
+  createOldValue(diff) {
+    if (diff.item) {
+      return (JSON.stringify(diff.item.lhs));
+    } else {
+      return JSON.stringify(diff.lhs);
+    }
+  }
+
+  createNewValue(diff) {
+    if (diff.item) {
+      return (JSON.stringify(diff.item.rhs));
+    } else {
+      return JSON.stringify(diff.rhs);
+    }
+  }
+
+  createPath (diff) {
+    let path = [];
+
+    if (diff.path) {
+      path = path.concat(diff.path);
+    }
+    if (typeof(diff.index) !== 'undefined') {
+      path.push(diff.index);
+    }
+    return path.length ? path.join('.') : '';
+  }
+
+  renderDiff (diff, index) {
+    const oldValue = this.createOldValue(diff);
+    const newValue = this.createNewValue(diff);
+    const path = this.createPath(diff);
 
     return (
-      <div key={index}>
-        { diff.path.join('.') }: <span style={style.oldValue}>{ oldValue || 'undefined' }</span>
-        <span style={style.newValue}> { newValue } </span>
-      </div>
+        <div key={index}>
+          { path }: <span style={style.oldValue}>{ oldValue || 'undefined' }</span>
+          <span style={style.newValue}> { newValue } </span>
+        </div>
     );
   }
 
   render() {
     const { action, diff, skipped } = this.props;
-    const { expanded } = this.state;
+    const expanded = this.props.expanded || this.state.expanded;
     const storeHasChanged = !!diff.length;
     const changes         = this.getDiffs();
 
     const actionBlock = this.state.expanded ?
-      <div>
-        <pre style={style.actionData}>{JSON.stringify(action)}</pre>
-      </div> :
-      null;
+        <div>
+          <pre style={style.actionData}>{JSON.stringify(action)}</pre>
+        </div> :
+        null;
 
     const storeBlock = (expanded && storeHasChanged) ?
-      <div>
-        <div style={style.header}>
-          <span>Store Mutations</span>
-        </div>
-        <pre style={style.store}>
+        <div>
+          <div style={style.header}>
+            <span>Store Mutations</span>
+          </div>
+        <pre
+            className="diff"
+            style={style.store}
+            >
           {changes}
         </pre>
-      </div> :
-      null;
+        </div> :
+        null;
 
     const enableToggle = skipped ?
-      'enable' :
-      'disable';
+        'enable' :
+        'disable';
 
     return (
-      <div>
-        <div style={style.base}>
-          <div
-            style={[
-              style.title,
-              diff.length && style.mutated,
-              skipped && style.skipped,
-            ]}
-            onClick={this.expandAction}
-            >
-            <span>{action.type}</span>
-            <span style={style.toggle} onClick={this.disableAction}>
-              {enableToggle}
-            </span>
+        <div className="manifest-action-component">
+          <div style={style.base}>
+            <div
+                className={action.type}
+                style={[
+                  style.title,
+                  diff.length && style.mutated,
+                  skipped && style.skipped
+                ]}
+                onClick={this.expandAction.bind(this)}
+                >
+              <span>{action.type}</span>
+              <span style={style.toggle} onClick={this.disableAction.bind(this)}>
+                {enableToggle}
+              </span>
+            </div>
+            {actionBlock}
+            {storeBlock}
           </div>
-          {actionBlock}
-          {storeBlock}
         </div>
-      </div>
     );
   }
 }
