@@ -1,0 +1,4 @@
+--require test/test-utils/dom.js
+--require should
+--reporter nyan
+--recursive

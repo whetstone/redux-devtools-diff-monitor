@@ -4,8 +4,7 @@ import Radium from 'radium';
 import ManifestAction from './action';
 import ManifestButton from './button';
 
-import deep from 'deep-diff';
-import Immutable from 'immutable';
+import diffState from './utils/diff-state';
 import mousetrap from 'mousetrap';
 
 import style from './style';
@@ -36,7 +35,7 @@ class ManifestComponent extends React.Component {
 
   componentDidMount() {
     const self = this;
-    Mousetrap.bind(this.props.shortcut || ['ctrl+h', 'ctrl+]'], function (e) {
+    window.Mousetrap.bind(this.props.shortcut || ['ctrl+h', 'ctrl+]'], function (e) {
       self.toggleVisibility();
       return false;
     });
@@ -47,7 +46,7 @@ class ManifestComponent extends React.Component {
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind(this.props.shortcut || ['ctrl+h', 'ctrl+]']);
+    window.Mousetrap.unbind(this.props.shortcut || ['ctrl+h', 'ctrl+]']);
   }
 
   render() {
@@ -58,7 +57,7 @@ class ManifestComponent extends React.Component {
     return (
       <div style={[
           style.base,
-          visible && style.hidden,
+          visible && style.hidden
         ]}
       >
         <div style={style.controls}>
@@ -73,20 +72,14 @@ class ManifestComponent extends React.Component {
   }
 
   renderAction(action, index) {
-    let newState, oldState, diff;
-    if (index !== 0) {
-      newState = Immutable.Map(this.props.computedStates[index].state).toJS();
-      oldState = Immutable.Map(this.props.computedStates[index - 1].state).toJS();
-      diff = deep.diff(oldState, newState);
-    }
-
+    const diffedStates = diffState(this.props.computedStates, index);
     const skippingAction = this.props.skippedActions[index]===true;
 
     return (
       <ManifestAction action={action}
                       index={index}
                       key={index}
-                      diff={diff || []}
+                      diff={diffedStates}
                       skipped={skippingAction}
                       toggleAction={this.props.toggleAction.bind(this, index)}
                       jumpTo={this.jumpingTo.bind(this, index)}/>
