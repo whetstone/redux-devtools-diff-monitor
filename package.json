@@ -23,10 +23,11 @@
   },
   "dependencies": {
     "deep-diff": "^0.3.2",
-    "immutable": "3.7.5",
+    "immutable": "^3.7.5",
     "mousetrap": "^1.5.3",
     "radium": "^0.13.5",
-    "react-redux": "2.0.0",
-    "redux": "2.0.0"
+    "react": "^0.14.0",
+    "react-redux": "^3.1.0",
+    "redux": "^3.0.2"
   }
 }

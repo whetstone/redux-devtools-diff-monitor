@@ -14,15 +14,16 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
     alias: {
-      'react': path.join(__dirname, 'node_modules', 'react'),
-      'redux-devtools-diff-monitor':  path.join(__dirname, '..', '..', 'src')
+      'react': path.join(__dirname, 'node_modules', 'react')
     },
     extensions: ['', '.js']
+  },
+  resolveLoader: {
+    'fallback': path.join(__dirname, 'node_modules')
   },
   module: {
     loaders: [{
@@ -32,7 +33,7 @@ module.exports = {
       include: __dirname
     }, {
       test: /\.js$/,
-      loaders: ['babel'],
+      loaders: ['react-hot', 'babel'],
       include: path.join(__dirname, '..', '..', 'src')
     }, {
       test: /\.css?$/,
