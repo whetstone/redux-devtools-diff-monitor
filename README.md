@@ -1,5 +1,7 @@
 # Redux DevTools – Diff Monitor
 
+(3.0 builds with react 0.14 and redux 3.0 in the /src and /examples)
+
 This project provides an alternate monitor for Redux DevTools. The primary goal of this monitor is to highlight the changes to an application's state from action to action. This tool includes the main features from the default DevTools monitor (rollback, commit, reset and individual action toggles).
 
 ![Imgur](http://i.imgur.com/rvCR9OQ.png)
