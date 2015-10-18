@@ -1,35 +1,49 @@
 import React, { Component, PropTypes } from 'react';
 import Radium from 'radium';
 import { ActionCreators } from 'redux-devtools';
-
 import ManifestAction from './action';
 import ManifestButton from './button';
-
 import diffState from './utils/diff-state';
-
 import style from './style';
+
+const { reset, rollback, commit, sweep, toggleAction } = ActionCreators;
 
 class ManifestComponent extends Component {
 
+  static reducer = () => {};
+
   static propTypes = {
     // Stuff you can use
-    computedStates: PropTypes.array.isRequired,
-    currentStateIndex: PropTypes.number.isRequired,
-    stagedActions: PropTypes.array.isRequired,
-    skippedActions: PropTypes.object.isRequired,
-
-    // Stuff you can do
-    toggleAction: PropTypes.func.isRequired, // ({ index })
-    jumpToState: PropTypes.func.isRequired // ({ index })
+    dispatch: PropTypes.func,
+    computedStates: PropTypes.array,
+    actionsByIds: PropTypes.object,
+    stagedActionIds: PropTypes.array,
+    skippedActionIds: PropTypes.array,
   };
 
   jumpingTo(index) {
     this.props.jumpToState(index);
   }
 
+  handleRollback = () => {
+    this.props.dispatch(rollback());
+  };
+
+  handleSweep = () => {
+    this.props.dispatch(sweep());
+  };
+
+  handleCommit = () => {
+    this.props.dispatch(commit());
+  };
+
+  handleReset = () => {
+    this.props.dispatch(reset());
+  };
+
   renderAction(action, index) {
     const diffedStates = diffState(this.props.computedStates, index);
-    const skippingAction = this.props.skippedActions[index]===true;
+    const skippingAction = this.props.skippedActionIds.indexOf(action.id) !== -1;
 
     return (
       <ManifestAction
@@ -47,7 +61,6 @@ class ManifestComponent extends Component {
   render() {
     const actionReports = this.props.stagedActions.map(this.renderAction.bind(this));
     const { visible } = this.state;
-    const { commit, rollback, reset } = this.props;
 
     return (
       <div style={[
@@ -56,9 +69,9 @@ class ManifestComponent extends Component {
         ]}
       >
         <div style={style.controls}>
-          <ManifestButton label="Commit" action={commit} />
-          <ManifestButton label="Rollback" action={rollback} />
-          <ManifestButton label="Reset" action={reset} />
+          <ManifestButton label="Commit" action={this.handleCommit} />
+          <ManifestButton label="Rollback" action={this.handleRollback} />
+          <ManifestButton label="Reset" action={this.handleReset} />
         </div>
 
         {actionReports.reverse()}
