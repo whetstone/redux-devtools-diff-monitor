@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import TodoApp from './TodoApp';
 import { createStore, combineReducers, compose } from 'redux';
-import { devTools, persistState } from 'redux-devtools';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
-import DiffMonitor from '../../../lib'
+import DevTools from './DevTools';
 
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
 
-const finalCreateStore = compose(
-  devTools(),
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-)(createStore);
-
 const reducer = combineReducers(reducers);
-const store = finalCreateStore(reducer);
+const store = createStore(reducer);
 
 if (module.hot) {
   module.hot.accept('../reducers', () =>
@@ -29,7 +22,7 @@ export default class App extends Component {
         <Provider store={store}>
           <TodoApp />
         </Provider>
-        <DevTools store={store} monitor={DiffMonitor} shortcut='ctrl+d'/>
+        <DevTools />
       </div>
     );
   }

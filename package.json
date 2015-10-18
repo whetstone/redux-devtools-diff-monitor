@@ -1,6 +1,6 @@
 {
   "name": "redux-devtools-diff-monitor",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "A monitor for Redux Devtools that diffs the redux store mutations between actions for a more concise view into your application's lifecycle.",
   "main": "lib/index.js",
   "scripts": {
@@ -19,15 +19,17 @@
     "chai": "^3.3.0",
     "jsdom": "3.1.2",
     "mocha": "^2.3.3",
-    "should": "^7.1.0"
+    "redux-devtools-dock-monitor": "^1.0.0-beta-3",
+    "should": "^7.1.0",
+    "webpack": "^1.12.2"
   },
   "dependencies": {
     "deep-diff": "^0.3.2",
     "immutable": "^3.7.5",
-    "mousetrap": "^1.5.3",
     "radium": "^0.13.5",
     "react": "^0.14.0",
     "react-redux": "^3.1.0",
-    "redux": "^3.0.2"
+    "redux": "^3.0.2",
+    "redux-devtools": "^3.0.0-beta-3"
   }
 }

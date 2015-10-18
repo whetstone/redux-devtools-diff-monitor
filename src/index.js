@@ -1,21 +1,15 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Radium from 'radium';
+import { ActionCreators } from 'redux-devtools';
 
 import ManifestAction from './action';
 import ManifestButton from './button';
 
 import diffState from './utils/diff-state';
-import mousetrap from 'mousetrap';
 
 import style from './style';
 
-class ManifestComponent extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      visible: true
-    };
-  }
+class ManifestComponent extends Component {
 
   static propTypes = {
     // Stuff you can use
@@ -25,28 +19,29 @@ class ManifestComponent extends React.Component {
     skippedActions: PropTypes.object.isRequired,
 
     // Stuff you can do
-    reset: PropTypes.func.isRequired,
-    commit: PropTypes.func.isRequired,
-    rollback: PropTypes.func.isRequired,
-    sweep: PropTypes.func.isRequired,
     toggleAction: PropTypes.func.isRequired, // ({ index })
     jumpToState: PropTypes.func.isRequired // ({ index })
   };
 
-  componentDidMount() {
-    const self = this;
-    window.Mousetrap.bind(this.props.shortcut || ['ctrl+h', 'ctrl+]'], function (e) {
-      self.toggleVisibility();
-      return false;
-    });
+  jumpingTo(index) {
+    this.props.jumpToState(index);
   }
 
-  toggleVisibility() {
-    this.setState({visible: !this.state.visible});
-  }
+  renderAction(action, index) {
+    const diffedStates = diffState(this.props.computedStates, index);
+    const skippingAction = this.props.skippedActions[index]===true;
 
-  componentWillUnmount() {
-    window.Mousetrap.unbind(this.props.shortcut || ['ctrl+h', 'ctrl+]']);
+    return (
+      <ManifestAction
+        action={action}
+        index={index}
+        key={index}
+        diff={diffedStates}
+        skipped={skippingAction}
+        toggleAction={this.props.toggleAction.bind(this, index)}
+        jumpTo={this.jumpingTo.bind(this, index)}
+      />
+    );
   }
 
   render() {
@@ -69,25 +64,6 @@ class ManifestComponent extends React.Component {
         {actionReports.reverse()}
       </div>
     );
-  }
-
-  renderAction(action, index) {
-    const diffedStates = diffState(this.props.computedStates, index);
-    const skippingAction = this.props.skippedActions[index]===true;
-
-    return (
-      <ManifestAction action={action}
-                      index={index}
-                      key={index}
-                      diff={diffedStates}
-                      skipped={skippingAction}
-                      toggleAction={this.props.toggleAction.bind(this, index)}
-                      jumpTo={this.jumpingTo.bind(this, index)}/>
-    );
-  }
-
-  jumpingTo(index) {
-    this.props.jumpToState(index);
   }
 }
 
