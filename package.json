@@ -1,30 +1,41 @@
 {
   "name": "redux-devtools-diff-monitor",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "A monitor for Redux Devtools that diffs the redux store mutations between actions for a more concise view into your application's lifecycle.",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "clean": "rimraf lib",
+    "build": "npm run clean && babel src --out-dir lib",
     "prepublish": "npm run build",
-    "test": "mocha test/ --compilers js:babel/register"
+    "test": "mocha test/ --compilers js:babel/register",
+    "lint": "eslint ./src/** --quiet"
   },
   "repository": "https://github.com/whetstone/redux-devtools-diff-monitor.git",
   "author": "iktl | gtfiorentino",
   "license": "MIT",
   "devDependencies": {
-    "babel": "^5.5.8",
-    "babel-core": "^5.6.18",
-    "babel-eslint": "^3.1.15",
-    "babel-loader": "^5.1.4",
+    "babel": "^6.3.26",
+    "babel-cli": "^6.3.17",
+    "babel-core": "^6.3.26",
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-1": "^6.3.13",
     "chai": "^3.3.0",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-react": "^3.13.1",
     "jsdom": "3.1.2",
     "mocha": "^2.3.3",
+    "rimraf": "^2.5.0",
     "should": "^7.1.0"
+  },
+  "peerDependencies": {
+    "redux-devtools": "^3.0.0"
   },
   "dependencies": {
     "deep-diff": "^0.3.2",
-    "immutable": "^3.7.5",
-    "mousetrap": "^1.5.3",
+    "immutable": "^3.7.6",
     "radium": "^0.13.5",
     "react": "^0.14.0",
     "react-redux": "^3.1.0",
