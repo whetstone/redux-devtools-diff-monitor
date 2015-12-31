@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import radium from 'radium';
 
 import ManifestAction from './action';
 import ManifestButton from './button';
@@ -56,9 +55,9 @@ export default class ManifestComponent extends React.Component {
         return (
             <div style={style.base}>
                 <div style={style.controls}>
-                    <ManifestButton label="Commit" action={() => dispatch(commit)}/>
-                    <ManifestButton label="Rollback" action={() => dispatch(rollback)}/>
-                    <ManifestButton label="Reset" action={() => dispatch(reset)}/>
+                    <ManifestButton label="Commit" action={() => dispatch(commit())}/>
+                    <ManifestButton label="Rollback" action={() => dispatch(rollback())}/>
+                    <ManifestButton label="Reset" action={() => dispatch(reset())}/>
                 </div>
 
                 {actionReports.reverse()}
