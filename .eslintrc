@@ -1,0 +1,11 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "indent": [2, 4],
+    "no-loop-func": 0,
+    "no-unused-vars": 1,
+    "no-use-before-define": 0,
+    "react/jsx-indent-props": [2, 4]
+  }
+}

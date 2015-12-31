@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react';
 import style from './style';
 
-export default class ManifestButton extends React.Component {
-  render() {
-    const { label, action } = this.props;
-
+export default function ManifestButton({ label, action }) {
     return (
-      <div style={style.base} onClick={action}>
-        {label}
-      </div>
+        <div style={style.base} onClick={action}>
+            {label}
+        </div>
     );
-  }
 }
+
+ManifestButton.propTypes = {
+    label: PropTypes.string,
+    action: PropTypes.func,
+};
