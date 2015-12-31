@@ -4,10 +4,10 @@ import style from './style';
 
 class ManifestActionComponent extends React.Component {
     static propTypes = {
-        diff: PropTypes.func,
+        diff: PropTypes.array,
         toggleAction: PropTypes.func,
         index: PropTypes.number,
-        action: PropTypes.func,
+        action: PropTypes.object,
         skipped: PropTypes.bool,
         expanded: PropTypes.bool,
     };
@@ -77,7 +77,7 @@ class ManifestActionComponent extends React.Component {
     }
 
     render() {
-        const { action, diff, skipped } = this.props;
+        const { action: { action }, diff, skipped } = this.props;
         const expanded = this.props.expanded || this.state.expanded;
         const storeHasChanged = !!diff.length;
         const changes = this.getDiffs();

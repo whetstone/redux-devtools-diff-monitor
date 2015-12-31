@@ -6,72 +6,59 @@ import ManifestButton from './button';
 
 import diffState from './utils/diff-state';
 
+import { ActionCreators } from 'redux-devtools';
+const { reset, rollback, commit, toggleAction, jumpToState } = ActionCreators;
+
 import style from './style';
 
-class ManifestComponent extends React.Component {
+export default class ManifestComponent extends React.Component {
     static propTypes = {
-        // Stuff you can use
-        computedStates: PropTypes.array.isRequired,
-        currentStateIndex: PropTypes.number.isRequired,
-        stagedActions: PropTypes.array.isRequired,
-        skippedActions: PropTypes.object.isRequired,
+        computedStates: PropTypes.array,
+        actionsById: PropTypes.object,
+        stagedActionIds: PropTypes.array,
+        skippedActionIds: PropTypes.array,
 
-        // Stuff you can do
-        reset: PropTypes.func.isRequired,
-        commit: PropTypes.func.isRequired,
-        rollback: PropTypes.func.isRequired,
-        sweep: PropTypes.func.isRequired,
-        toggleAction: PropTypes.func.isRequired, // ({ index })
-        jumpToState: PropTypes.func.isRequired, // ({ index })
+        dispatch: PropTypes.func.isRequired,
     };
 
-    constructor() {
-        super();
-        this.state = {
-            visible: true,
-        };
+    static update = () => {};
+
+    handleJumpTo = id => {
+        this.props.dispatch(jumpToState(id));
     }
 
-    jumpingTo(index) {
-        this.props.jumpToState(index);
-    }
+    handleToggleAction = id => {
+        this.props.dispatch(toggleAction(id));
+    };
 
-    toggleVisibility() {
-        this.setState({ visible: !this.state.visible });
-    }
-
-    renderAction(action, index) {
-        const diffedStates = diffState(this.props.computedStates, index);
-        const skippingAction = this.props.skippedActions[index] === true;
+    renderAction = id => {
+        const action = this.props.actionsById[id];
+        const diffedStates = diffState(this.props.computedStates, id);
+        const skippingAction = this.props.skippedActionIds.indexOf(id) !== -1;
 
         return (
-            <ManifestAction action={action}
-                index={index}
-                key={index}
+            <ManifestAction
+                action={action}
+                index={id}
+                key={id}
                 diff={diffedStates}
                 skipped={skippingAction}
-                toggleAction={this.props.toggleAction.bind(this, index)}
-                jumpTo={this.jumpingTo.bind(this, index)}
+                toggleAction={() => this.handleToggleAction(id)}
+                jumpTo={() => this.handleJumpTo(id)}
             />
         );
     }
 
     render() {
-        const actionReports = this.props.stagedActions.map(this.renderAction.bind(this));
-        const { visible } = this.state;
-        const { commit, rollback, reset } = this.props;
+        const actionReports = this.props.stagedActionIds.map(this.renderAction);
+        const { dispatch } = this.props;
 
         return (
-            <div
-                style={[
-                    style.base,
-                    visible && style.hidden,
-                ]}
-            >
+            <div style={style.base}>
                 <div style={style.controls}>
-                    <ManifestButton label="Commit" action={commit}/>
-                    <ManifestButton label="Rollback" action={rollback}/>
-                    <ManifestButton label="Reset" action={reset}/>
+                    <ManifestButton label="Commit" action={() => dispatch(commit)}/>
+                    <ManifestButton label="Rollback" action={() => dispatch(rollback)}/>
+                    <ManifestButton label="Reset" action={() => dispatch(reset)}/>
                 </div>
 
                 {actionReports.reverse()}
@@ -79,5 +66,3 @@ class ManifestComponent extends React.Component {
         );
     }
 }
-
-export default radium(ManifestComponent);
