@@ -1,17 +1,20 @@
 # Redux DevTools Counter example
 
+This example is adapted from `https://github.com/gaearon/redux-devtools/tree/master/examples/todomvc` to demonstrate
+the use of the Redux Devtools Diff Monitor.
+
 ## Running Example
 
 First, clone the project:
 
 ```
-git clone https://github.com/gaearon/redux-devtools.git
+git clone https://github.com/whetstone/redux-devtools-diff-monitor.git
 ```
 
 Then install the dependencies in the root folder:
 
 ```
-cd redux-devtools
+cd redux-devtools-diff-monitor
 npm install
 ```
 
