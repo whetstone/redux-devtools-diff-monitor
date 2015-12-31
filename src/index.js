@@ -1,14 +1,11 @@
 import React, { PropTypes } from 'react';
-
 import ManifestAction from './action';
 import ManifestButton from './button';
-
 import diffState from './utils/diff-state';
-
 import { ActionCreators } from 'redux-devtools';
-const { reset, rollback, commit, toggleAction, jumpToState } = ActionCreators;
-
 import style from './style';
+
+const { reset, rollback, commit, toggleAction, jumpToState } = ActionCreators;
 
 export default class ManifestComponent extends React.Component {
     static propTypes = {
@@ -16,8 +13,7 @@ export default class ManifestComponent extends React.Component {
         actionsById: PropTypes.object,
         stagedActionIds: PropTypes.array,
         skippedActionIds: PropTypes.array,
-
-        dispatch: PropTypes.func.isRequired,
+        dispatch: PropTypes.func,
     };
 
     static update = () => {};
