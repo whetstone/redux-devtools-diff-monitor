@@ -1,94 +1,63 @@
 import React, { PropTypes } from 'react';
-import Radium from 'radium';
-
 import ManifestAction from './action';
 import ManifestButton from './button';
-
 import diffState from './utils/diff-state';
-import mousetrap from 'mousetrap';
-
+import { ActionCreators } from 'redux-devtools';
 import style from './style';
 
-class ManifestComponent extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      visible: true
+const { reset, rollback, commit, toggleAction, jumpToState } = ActionCreators;
+
+export default class ManifestComponent extends React.Component {
+    static propTypes = {
+        computedStates: PropTypes.array,
+        actionsById: PropTypes.object,
+        stagedActionIds: PropTypes.array,
+        skippedActionIds: PropTypes.array,
+        dispatch: PropTypes.func,
     };
-  }
 
-  static propTypes = {
-    // Stuff you can use
-    computedStates: PropTypes.array.isRequired,
-    currentStateIndex: PropTypes.number.isRequired,
-    stagedActions: PropTypes.array.isRequired,
-    skippedActions: PropTypes.object.isRequired,
+    static update = () => {};
 
-    // Stuff you can do
-    reset: PropTypes.func.isRequired,
-    commit: PropTypes.func.isRequired,
-    rollback: PropTypes.func.isRequired,
-    sweep: PropTypes.func.isRequired,
-    toggleAction: PropTypes.func.isRequired, // ({ index })
-    jumpToState: PropTypes.func.isRequired // ({ index })
-  };
+    handleJumpTo = id => {
+        this.props.dispatch(jumpToState(id));
+    }
 
-  componentDidMount() {
-    const self = this;
-    window.Mousetrap.bind(this.props.shortcut || ['ctrl+h', 'ctrl+]'], function (e) {
-      self.toggleVisibility();
-      return false;
-    });
-  }
+    handleToggleAction = id => {
+        this.props.dispatch(toggleAction(id));
+    };
 
-  toggleVisibility() {
-    this.setState({visible: !this.state.visible});
-  }
+    renderAction = id => {
+        const action = this.props.actionsById[id];
+        const diffedStates = diffState(this.props.computedStates, id);
+        const skippingAction = this.props.skippedActionIds.indexOf(id) !== -1;
 
-  componentWillUnmount() {
-    window.Mousetrap.unbind(this.props.shortcut || ['ctrl+h', 'ctrl+]']);
-  }
+        return (
+            <ManifestAction
+                action={action}
+                index={id}
+                key={id}
+                diff={diffedStates}
+                skipped={skippingAction}
+                toggleAction={() => this.handleToggleAction(id)}
+                jumpTo={() => this.handleJumpTo(id)}
+            />
+        );
+    }
 
-  render() {
-    const actionReports = this.props.stagedActions.map(this.renderAction.bind(this));
-    const { visible } = this.state;
-    const { commit, rollback, reset } = this.props;
+    render() {
+        const actionReports = this.props.stagedActionIds.map(this.renderAction);
+        const { dispatch } = this.props;
 
-    return (
-      <div style={[
-          style.base,
-          visible && style.hidden
-        ]}
-      >
-        <div style={style.controls}>
-          <ManifestButton label="Commit" action={commit} />
-          <ManifestButton label="Rollback" action={rollback} />
-          <ManifestButton label="Reset" action={reset} />
-        </div>
+        return (
+            <div style={style.base}>
+                <div style={style.controls}>
+                    <ManifestButton label="Commit" action={() => dispatch(commit())}/>
+                    <ManifestButton label="Rollback" action={() => dispatch(rollback())}/>
+                    <ManifestButton label="Reset" action={() => dispatch(reset())}/>
+                </div>
 
-        {actionReports.reverse()}
-      </div>
-    );
-  }
-
-  renderAction(action, index) {
-    const diffedStates = diffState(this.props.computedStates, index);
-    const skippingAction = this.props.skippedActions[index]===true;
-
-    return (
-      <ManifestAction action={action}
-                      index={index}
-                      key={index}
-                      diff={diffedStates}
-                      skipped={skippingAction}
-                      toggleAction={this.props.toggleAction.bind(this, index)}
-                      jumpTo={this.jumpingTo.bind(this, index)}/>
-    );
-  }
-
-  jumpingTo(index) {
-    this.props.jumpToState(index);
-  }
+                {actionReports.reverse()}
+            </div>
+        );
+    }
 }
-
-export default Radium(ManifestComponent);
