@@ -1,5 +1,9 @@
 # Redux DevTools – Diff Monitor
 
+[![build status](https://img.shields.io/travis/whetstone/redux-devtools-diff-monitor.svg?style=flat-square)](http://travis-ci.org/whetstone/redux-devtools-diff-monitor)
+[![npm version](https://img.shields.io/npm/v/redux-devtools-diff-monitor.svg?style=flat-square)](https://www.npmjs.com/package/redux-devtools-diff-monitor)
+[![npm downloads](https://img.shields.io/npm/dm/redux-devtools-diff-monitor.svg?style=flat-square)](https://www.npmjs.com/package/redux-devtools-diff-monitor)
+
 (4.0 builds with react 0.14 and redux 3.0, using redux-devtools 3.0.0 in the /src and /examples)
 
 This project provides an alternate monitor for Redux DevTools. The primary goal of this monitor is to highlight the 
