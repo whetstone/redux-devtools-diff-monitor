@@ -16,6 +16,14 @@ class TodoApp extends Component {
       </div>
     );
   }
+
+  //componentDidMount() {
+  //  const { todos, actions } = this.props;
+  //
+  //  setInterval(() => {
+  //    actions.addTodo(Date.now())
+  //  }, 1000)
+  //}
 }
 
 function mapState(state) {

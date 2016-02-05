@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import ManifestAction from './action';
 import ManifestButton from './button';
-import diffState from './utils/diff-state';
 import { ActionCreators } from 'redux-devtools';
 import style from './style';
 
@@ -28,7 +27,8 @@ export default class ManifestComponent extends React.Component {
 
     renderAction = id => {
         const action = this.props.actionsById[id];
-        const diffedStates = diffState(this.props.computedStates, id);
+        //const diffedStates = diffState.bind(this.props.computedStates, id);
+
         const skippingAction = this.props.skippedActionIds.indexOf(id) !== -1;
 
         return (
@@ -36,7 +36,8 @@ export default class ManifestComponent extends React.Component {
                 action={action}
                 index={id}
                 key={id}
-                diff={diffedStates}
+                currentState={this.props.computedStates[id]}
+                previousState={this.props.computedStates[id - 1]}
                 skipped={skippingAction}
                 toggleAction={() => this.handleToggleAction(id)}
                 jumpTo={() => this.handleJumpTo(id)}

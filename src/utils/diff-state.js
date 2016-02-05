@@ -1,20 +1,12 @@
 import deep from 'deep-diff';
 import Immutable from 'immutable';
 
-export default (computedStates, index) => {
-    if (index !== 0) {
-        const newState = Immutable.fromJS({
-            state: computedStates[index].state,
-        }).toJS().state;
+export default (current, previous) => {
+  const newState = Immutable.fromJS(current).toJS().state;
+  const oldState = Immutable.fromJS(previous).toJS().state;
 
-        const oldState = Immutable.fromJS({
-            state: computedStates[index - 1].state,
-        }).toJS().state;
+  console.log('Diffing', oldState, newState);
+  const diff = deep.diff(oldState, newState);
 
-        const diff = deep.diff(oldState, newState);
-
-        return diff || [];
-    }
-
-    return [];
+  return diff || [];
 };
