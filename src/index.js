@@ -20,7 +20,7 @@ export default class ManifestComponent extends React.Component {
 
     handleJumpTo = id => {
         this.props.dispatch(jumpToState(id));
-    }
+    };
 
     handleToggleAction = id => {
         this.props.dispatch(toggleAction(id));
@@ -42,7 +42,7 @@ export default class ManifestComponent extends React.Component {
                 jumpTo={() => this.handleJumpTo(id)}
             />
         );
-    }
+    };
 
     render() {
         const actionReports = this.props.stagedActionIds.map(this.renderAction);
@@ -59,5 +59,5 @@ export default class ManifestComponent extends React.Component {
                 {actionReports.reverse()}
             </div>
         );
-    }
+    };
 }

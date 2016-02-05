@@ -36,9 +36,11 @@
     "deep-diff": "^0.3.2",
     "immutable": "^3.7.6",
     "radium": "^0.13.5",
-    "react": "^0.14.0",
-    "react-redux": "^3.1.0",
-    "redux": "^3.0.2",
-    "redux-devtools": "^3.0.0"
+    "react": "^0.14.7",
+    "react-addons-test-utils": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.3.0",
+    "redux": "^3.2.1",
+    "redux-devtools": "^3.1.0"
   }
 }
