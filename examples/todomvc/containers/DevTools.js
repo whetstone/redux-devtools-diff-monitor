@@ -1,7 +1,7 @@
 import React from 'react';
 import { createDevTools } from 'redux-devtools';
 import LogMonitor from 'redux-devtools-log-monitor';
-import DiffMonitor from 'redux-devtools-diff-monitor';
+import DiffMonitor from '../../../src';
 import DockMonitor from 'redux-devtools-dock-monitor';
 
 export default createDevTools(
