@@ -44,6 +44,7 @@ export default {
     store: {
         margin: '0',
         padding: '10px',
+        fontFamily: 'monospace'
     },
 
     changedProperty: {

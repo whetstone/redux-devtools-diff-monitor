@@ -96,12 +96,12 @@ class ManifestActionComponent extends React.Component {
         <div style={style.header}>
           <span>Store Mutations</span>
         </div>
-        <pre
+        <div
           className="diff"
           style={style.store}
         >
           {this.getDiffs()}
-        </pre>
+        </div>
       </div> :
       null;
 
