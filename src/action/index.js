@@ -75,6 +75,12 @@ class ManifestActionComponent extends React.Component {
     );
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const a = JSON.stringify(this.props.currentState);
+    const b = JSON.stringify(nextProps.currentState);
+    return a != b || this.state.expanded != nextState.expanded;
+  }
+
   render() {
     const {action: {action}, diff, skipped} = this.props;
     const expanded        = this.props.expanded || this.state.expanded;
