@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 import { expect } from 'chai';
-import React from 'react/addons';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import ManifestActionComponent from '../../src/action/index';
 import TestUtils from 'react-addons-test-utils';

@@ -1,134 +1,189 @@
-import React, { PropTypes } from 'react';
-import radium from 'radium';
-import style from './style';
+import React, {PropTypes} from 'react';
+import {StyleSheet, css} from 'aphrodite';
+import JSONTree from 'react-json-tree';
 
 class ManifestActionComponent extends React.Component {
-    static propTypes = {
-        diff: PropTypes.array,
-        toggleAction: PropTypes.func,
-        index: PropTypes.number,
-        action: PropTypes.object,
-        skipped: PropTypes.bool,
-        expanded: PropTypes.bool,
-    };
+  static propTypes = {
+    diff        : PropTypes.array,
+    toggleAction: PropTypes.func,
+    index       : PropTypes.number,
+    action      : PropTypes.object,
+    skipped     : PropTypes.bool,
+    expanded    : PropTypes.bool,
+  };
 
-    constructor() {
-        super();
-        this.state = {
-            expanded: false,
-        };
+  state = {
+    expanded: false
+  };
+
+  expandAction = () => {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  };
+
+  disableAction() {
+    this.props.toggleAction(this.props.index);
+    this.setState({
+      expanded: false
+    });
+  }
+
+  createOldValue(diff) {
+    if (diff.item) {
+      return (JSON.stringify(diff.item.lhs));
     }
 
-    getDiffs() {
-        const { diff } = this.props;
+    return JSON.stringify(diff.lhs);
+  }
 
-        return diff.map((d, i) => this.renderDiff(d, i));
+  createNewValue(diff) {
+    if (diff.item) {
+      return (JSON.stringify(diff.item.rhs));
     }
 
-    expandAction() {
-        this.setState({
-            expanded: !this.state.expanded,
-        });
+    return JSON.stringify(diff.rhs);
+  }
+
+  createPath(diff) {
+    let path = [];
+
+    if (diff.path) {
+      path = path.concat(diff.path);
     }
-
-    disableAction() {
-        this.props.toggleAction(this.props.index);
+    if (typeof(diff.index) !== 'undefined') {
+      path.push(diff.index);
     }
+    return path.length ? path.join('.') : '';
+  }
 
-    createOldValue(diff) {
-        if (diff.item) {
-            return (JSON.stringify(diff.item.lhs));
-        }
+  getDiffs() {
+    const {diff} = this.props;
+    return diff.map((d, i) => this.renderDiff(d, i));
+  }
 
-        return JSON.stringify(diff.lhs);
-    }
+  renderDiff(diff, index) {
+    const oldValue = this.createOldValue(diff);
+    const newValue = this.createNewValue(diff);
+    const path     = this.createPath(diff);
+    return (
+      <div key={index}>
+        { path }:&nbsp;
+        <span className={css(styles.oldValue)}>{ oldValue || 'undefined' }</span>
+        <span className={css(styles.newValue)}> { newValue } </span>
+      </div>
+    );
+  }
 
-    createNewValue(diff) {
-        if (diff.item) {
-            return (JSON.stringify(diff.item.rhs));
-        }
+  render() {
+    const {action: {action}, diff, skipped} = this.props;
+    const expanded        = this.props.expanded || this.state.expanded;
+    const storeHasChanged = !!diff.length;
+    const changes         = this.getDiffs();
 
-        return JSON.stringify(diff.rhs);
-    }
+    const actionSummary = this.state.expanded ?
+      <div className={css(styles.code)}>
+        <JSONTree data={action}/>
+      </div> : null;
 
-    createPath(diff) {
-        let path = [];
+    const changesToStore = (expanded && storeHasChanged) ?
+      <div className={css(styles.code)}>
+        {changes}
+      </div> : null;
 
-        if (diff.path) {
-            path = path.concat(diff.path);
-        }
-        if (typeof(diff.index) !== 'undefined') {
-            path.push(diff.index);
-        }
-        return path.length ? path.join('.') : '';
-    }
+    const enableToggle = skipped ? 'enable' : 'disable';
 
-    renderDiff(diff, index) {
-        const oldValue = this.createOldValue(diff);
-        const newValue = this.createNewValue(diff);
-        const path = this.createPath(diff);
-
-        return (
-            <div key={index}>
-                { path }: <span style={style.oldValue}>{ oldValue || 'undefined' }</span>
-                <span style={style.newValue}> { newValue } </span>
-            </div>
-        );
-    }
-
-    render() {
-        const { action: { action }, diff, skipped } = this.props;
-        const expanded = this.props.expanded || this.state.expanded;
-        const storeHasChanged = !!diff.length;
-        const changes = this.getDiffs();
-
-        const actionBlock = this.state.expanded ?
+    return (
+      <div className={css(styles.container)}>
+        <div>
+          <div className={css(
+            styles.header,
+            this.state.expanded && styles.bottomBordered,
+            storeHasChanged && styles.mutated
+          )}>
             <div>
-                <pre style={style.actionData}>{JSON.stringify(action)}</pre>
-            </div> :
-            null;
-
-        const storeBlock = (expanded && storeHasChanged) ?
-            <div>
-                <div style={style.header}>
-                    <span>Store Mutations</span>
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{flex: '1 0 auto'}}
+                     className={css(skipped && styles.skipped)}
+                     onClick={this.expandAction.bind(this)}>
+                  <span>{action.type}</span>
                 </div>
-        <pre
-            className="diff"
-            style={style.store}
-        >
-          {changes}
-        </pre>
-            </div> :
-            null;
-
-        const enableToggle = skipped ?
-            'enable' :
-            'disable';
-
-        return (
-            <div className="manifest-action-component">
-                <div style={style.base}>
-                    <div
-                        className={action.type}
-                        style={[
-                            style.title,
-                            diff.length && style.mutated,
-                            skipped && style.skipped,
-                        ]}
-                        onClick={this.expandAction.bind(this)}
-                    >
-                        <span>{action.type}</span>
-              <span style={style.toggle} onClick={this.disableAction.bind(this)}>
-                {enableToggle}
-              </span>
-                    </div>
-                    {actionBlock}
-                    {storeBlock}
+                <div>
+                <span onClick={this.disableAction.bind(this)}
+                      className={css(styles.toggle)}>
+                  {enableToggle}
+                </span>
                 </div>
+              </div>
             </div>
-        );
-    }
+          </div>
+          {actionSummary}
+          {changesToStore}
+        </div>
+      </div>
+    );
+  }
 }
 
-export default radium(ManifestActionComponent);
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: '10px',
+    border      : '1px solid #ddd',
+    background  : '#eee'
+  },
+
+  header: {
+    padding: 10
+  },
+
+  bottomBordered: {
+    borderBottom: '1px solid #ddd',
+  },
+
+  toggle: {
+    padding       : '0 5px',
+    flex          : '1 0 auto',
+    textAlign     : 'right',
+    textDecoration: 'underline',
+  },
+
+  title: {
+    cursor          : 'pointer',
+    padding         : '12px',
+    background      : '#ddd',
+    userSelect      : 'none',
+    WebkitUserSelect: 'none',
+  },
+
+  mutated: {
+    background: 'lightgreen',
+  },
+
+  skipped: {
+    textDecoration: 'line-through'
+  },
+
+  code: {
+    border    : '1px solid #ddd',
+    background: 'white',
+    padding   : 5,
+    wordWrap  : 'normal',
+    fontFamily: 'monospace',
+    margin    : '10'
+  },
+
+  changedProperty: {
+    display: 'block',
+  },
+
+  oldValue: {
+    textDecoration: 'line-through',
+    color         : 'pink',
+  },
+
+  newValue: {
+    color: 'darkgreen',
+  }
+});
+
+export default ManifestActionComponent;

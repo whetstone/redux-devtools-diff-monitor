@@ -34,6 +34,7 @@
     "react-redux": "^4.0.0",
     "redux": "^3.4.0",
     "redux-devtools": "^3.0.0",
+    "redux-devtools-diff-monitor": "^5.0.1",
     "redux-devtools-dock-monitor": "^1.1.1",
     "redux-devtools-log-monitor": "^1.0.9"
   },

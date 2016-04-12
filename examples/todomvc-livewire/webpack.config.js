@@ -17,12 +17,6 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
     ],
     resolve: {
-        alias: {
-            'redux-devtools-diff-monitor': path.join(__dirname, '..', '..', 'src'),
-            'react': path.join(__dirname, 'node_modules', 'react'),
-            'redux-devtools': path.join(__dirname, 'node_modules', 'redux-devtools'),
-            'react-json-tree': path.join(__dirname, 'node_modules', 'react-json-tree'),
-        },
         extensions: ['', '.js'],
     },
     resolveLoader: {
