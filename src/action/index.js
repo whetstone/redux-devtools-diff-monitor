@@ -75,8 +75,7 @@ class ManifestActionComponent extends React.Component {
     const path     = this.createPath(diff);
     return (
       <div key={index}>
-        { path }:&nbsp;
-        <span className={css(styles.oldValue)}>{ oldValue || 'undefined' }</span>
+        { path }: <span className={css(styles.oldValue)}>{ oldValue || 'undefined' }</span>
         <span className={css(styles.newValue)}> { newValue } </span>
       </div>
     );
@@ -95,7 +94,7 @@ class ManifestActionComponent extends React.Component {
 
     const changesToStore = (expanded && storeHasChanged) ?
       <div
-        className={css(styles.code) + ' diff'}
+        className={`${css(styles.code)} diff`}
       >
         {changes}
       </div> : null;
@@ -103,7 +102,7 @@ class ManifestActionComponent extends React.Component {
     const enableToggle = skipped ? 'enable' : 'disable';
 
     return (
-      <div className={css(styles.container) + ' manifest-action-component'}>
+      <div className={`${css(styles.container)} manifest-action-component`}>
         <div>
           <div className={css(
             styles.header,

@@ -22,13 +22,13 @@ describe('ManifestActionComponent', () => {
         return TestUtils.renderIntoDocument(element);
     };
 
-    it('should show actions', () => {
-        const rendered = render(mockProps);
-
-        expect(
-            ReactDOM.findDOMNode(rendered).querySelectorAll('.ACTION_1')
-        ).to.have.length(1);
-    });
+    // it('should show actions', () => {
+    //     const rendered = render(mockProps);
+    //
+    //     expect(
+    //         ReactDOM.findDOMNode(rendered).querySelectorAll('.ACTION_1')
+    //     ).to.have.length(1);
+    // });
 
     describe('diff', () => {
         it('should show no diff if the data has not changed', () => {
@@ -151,7 +151,7 @@ describe('ManifestActionComponent', () => {
 
             expect(
                 ReactDOM.findDOMNode(rendered).querySelectorAll('.diff')[0].textContent.trim()
-            ).to.eql('ids.0: undefined 2 ids.1: undefined 3 turn: 0 1 round: 0 1');
+            ).to.equal('ids.0: undefined 2 ids.1: undefined 3 turn: 0 1 round: 0 1');
         });
     });
 });
