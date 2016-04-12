@@ -75,8 +75,7 @@ class ManifestActionComponent extends React.Component {
     const path     = this.createPath(diff);
     return (
       <div key={index}>
-        { path }:&nbsp;
-        <span className={css(styles.oldValue)}>{ oldValue || 'undefined' }</span>
+        { path }: <span className={css(styles.oldValue)}>{ oldValue || 'undefined' }</span>
         <span className={css(styles.newValue)}> { newValue } </span>
       </div>
     );
