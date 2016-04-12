@@ -1,11 +1,10 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ManifestAction from './action';
 import ManifestButton from './button';
 import diffState from './utils/diff-state';
-import {ActionCreators} from 'redux-devtools';
-
-import {StyleSheet, css} from 'aphrodite';
-const {reset, rollback, commit, toggleAction, jumpToState} = ActionCreators;
+import { ActionCreators } from 'redux-devtools';
+import { StyleSheet, css } from 'aphrodite';
+const { reset, rollback, commit, toggleAction, jumpToState } = ActionCreators;
 
 export default class ManifestComponent extends React.Component {
   static propTypes = {
@@ -47,14 +46,14 @@ export default class ManifestComponent extends React.Component {
 
   render() {
     const actionReports = this.props.stagedActionIds.map(this.renderAction);
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
 
     return (
       <div>
         <div className={css(styles.container)}>
-          <ManifestButton label="Commit" action={() => dispatch(commit())}/>
-          <ManifestButton label="Rollback" action={() => dispatch(rollback())}/>
-          <ManifestButton label="Reset" action={() => dispatch(reset())}/>
+          <ManifestButton label="Commit" action={() => dispatch(commit())} />
+          <ManifestButton label="Rollback" action={() => dispatch(rollback())} />
+          <ManifestButton label="Reset" action={() => dispatch(reset())} />
         </div>
         <div className={css(styles.actions)}>
           {actionReports.reverse()}
@@ -69,9 +68,9 @@ const styles = StyleSheet.create({
     display      : 'flex',
     flexDirection: 'row',
     flexWrap     : 'nowrap',
-    borderBottom : '1px solid #ddd'
+    borderBottom : '1px solid #ddd',
   },
   actions  : {
     margin: '10px',
-  }
+  },
 });

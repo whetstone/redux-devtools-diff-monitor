@@ -2,9 +2,9 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "rules": {
-    "indent": [2, 4],
     "no-unused-vars": 1,
     "no-use-before-define": 0,
-    "react/jsx-indent-props": [2, 4]
+    "key-spacing": 0,
+    "no-multi-spaces": 0
   }
 }

@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react';
-import {StyleSheet, css} from 'aphrodite';
+import React, { PropTypes } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import JSONTree from 'react-json-tree';
 
 class ManifestActionComponent extends React.Component {
@@ -10,22 +10,28 @@ class ManifestActionComponent extends React.Component {
     action      : PropTypes.object,
     skipped     : PropTypes.bool,
     expanded    : PropTypes.bool,
+    currentState: PropTypes.object,
   };
 
   state = {
-    expanded: false
+    expanded: false,
   };
 
-  expandAction = () => {
-    this.setState({
-      expanded: !this.state.expanded
-    });
-  };
+  shouldComponentUpdate(nextProps, nextState) {
+    const a = JSON.stringify(this.props.currentState);
+    const b = JSON.stringify(nextProps.currentState);
+    return a !== b || this.state.expanded !== nextState.expanded;
+  }
+
+  getDiffs() {
+    const { diff } = this.props;
+    return diff.map((d, i) => this.renderDiff(d, i));
+  }
 
   disableAction() {
     this.props.toggleAction(this.props.index);
     this.setState({
-      expanded: false
+      expanded: false,
     });
   }
 
@@ -57,10 +63,11 @@ class ManifestActionComponent extends React.Component {
     return path.length ? path.join('.') : '';
   }
 
-  getDiffs() {
-    const {diff} = this.props;
-    return diff.map((d, i) => this.renderDiff(d, i));
-  }
+  expandAction = () => {
+    this.setState({
+      expanded: !this.state.expanded,
+    });
+  };
 
   renderDiff(diff, index) {
     const oldValue = this.createOldValue(diff);
@@ -75,48 +82,49 @@ class ManifestActionComponent extends React.Component {
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const a = JSON.stringify(this.props.currentState);
-    const b = JSON.stringify(nextProps.currentState);
-    return a != b || this.state.expanded != nextState.expanded;
-  }
-
   render() {
-    const {action: {action}, diff, skipped} = this.props;
+    const { action: { action }, diff, skipped } = this.props;
     const expanded        = this.props.expanded || this.state.expanded;
     const storeHasChanged = !!diff.length;
     const changes         = this.getDiffs();
 
     const actionSummary = this.state.expanded ?
       <div className={css(styles.code)}>
-        <JSONTree data={action}/>
+        <JSONTree data={action} />
       </div> : null;
 
     const changesToStore = (expanded && storeHasChanged) ?
-      <div className={css(styles.code)}>
+      <div
+        className={css(styles.code) + ' diff'}
+      >
         {changes}
       </div> : null;
 
     const enableToggle = skipped ? 'enable' : 'disable';
 
     return (
-      <div className={css(styles.container)}>
+      <div className={css(styles.container) + ' manifest-action-component'}>
         <div>
           <div className={css(
             styles.header,
             this.state.expanded && styles.bottomBordered,
             storeHasChanged && styles.mutated
-          )}>
+          )}
+          >
             <div>
-              <div style={{display: 'flex', flexDirection: 'row'}}>
-                <div style={{flex: '1 0 auto'}}
-                     className={css(skipped && styles.skipped)}
-                     onClick={this.expandAction.bind(this)}>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <div
+                  style={{ flex: '1 0 auto' }}
+                  className={css(skipped && styles.skipped)}
+                  onClick={this.expandAction}
+                >
                   <span>{action.type}</span>
                 </div>
                 <div>
-                <span onClick={this.disableAction.bind(this)}
-                      className={css(styles.toggle)}>
+                <span
+                  onClick={this.disableAction}
+                  className={css(styles.toggle)}
+                >
                   {enableToggle}
                 </span>
                 </div>
@@ -135,11 +143,11 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: '10px',
     border      : '1px solid #ddd',
-    background  : '#eee'
+    background  : '#eee',
   },
 
   header: {
-    padding: 10
+    padding: 10,
   },
 
   bottomBordered: {
@@ -166,7 +174,7 @@ const styles = StyleSheet.create({
   },
 
   skipped: {
-    textDecoration: 'line-through'
+    textDecoration: 'line-through',
   },
 
   code: {
@@ -175,7 +183,7 @@ const styles = StyleSheet.create({
     padding   : 5,
     wordWrap  : 'normal',
     fontFamily: 'monospace',
-    margin    : '10'
+    margin    : '10',
   },
 
   changedProperty: {
@@ -189,7 +197,7 @@ const styles = StyleSheet.create({
 
   newValue: {
     color: 'darkgreen',
-  }
+  },
 });
 
 export default ManifestActionComponent;
