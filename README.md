@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/redux-devtools-diff-monitor.svg?style=flat-square)](https://www.npmjs.com/package/redux-devtools-diff-monitor)
 [![npm downloads](https://img.shields.io/npm/dm/redux-devtools-diff-monitor.svg?style=flat-square)](https://www.npmjs.com/package/redux-devtools-diff-monitor)
 
-(4.0 builds with react 0.14 and redux 3.0, using redux-devtools 3.0.0 in the /src and /examples)
+5.0 has been released with support for React 15. It contains other improvements to performance (such as calculating diff only when an action is expanded) and some cosmetic changes.
 
 This project provides an alternate monitor for Redux DevTools. The primary goal of this monitor is to highlight the 
 changes to an application's state from action to action. This tool includes the main features from the default DevTools 
