@@ -28,13 +28,6 @@ class ManifestActionComponent extends React.Component {
     return diff.map((d, i) => this.renderDiff(d, i));
   }
 
-  disableAction() {
-    this.props.toggleAction(this.props.index);
-    this.setState({
-      expanded: false,
-    });
-  }
-
   createOldValue(diff) {
     if (diff.item) {
       return (JSON.stringify(diff.item.lhs));
@@ -62,6 +55,13 @@ class ManifestActionComponent extends React.Component {
     }
     return path.length ? path.join('.') : '';
   }
+
+  disableAction = () => {
+    this.props.toggleAction(this.props.index);
+    this.setState({
+      expanded: false,
+    });
+  };
 
   expandAction = () => {
     this.setState({
