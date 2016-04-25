@@ -49,7 +49,7 @@ export default class ManifestComponent extends React.Component {
     const { dispatch } = this.props;
 
     return (
-      <div>
+      <div className={css(styles.wrap)}>
         <div className={css(styles.container)}>
           <ManifestButton label="Commit" action={() => dispatch(commit())} />
           <ManifestButton label="Rollback" action={() => dispatch(rollback())} />
@@ -64,6 +64,12 @@ export default class ManifestComponent extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  wrap: {
+    overflowY: 'auto',
+    width: '100%',
+    height: '100%',
+    minWidth: 300,
+  },
   container: {
     display      : 'flex',
     flexDirection: 'row',
